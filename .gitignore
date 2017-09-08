@@ -10,10 +10,6 @@ target/
 .springBeans
 
 ### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
 
 ### NetBeans ###
 nbproject/private/

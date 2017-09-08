@@ -118,6 +118,27 @@ function PhoneBookModel() {
         self.validation(false);
     };
 
+    self.removeContact = function (contact) {
+        $.ajax({
+            type: "POST",
+            url: "/phoneBook/rcp/api/v1/removeContact",
+            data: {index: contact.id}
+        }).done(function() {
+            alert("ошибка, список повреждён, обновите стариницу");
+            // self.serverValidation(false);
+        }).fail(function(ajaxRequest) {
+            // var contactValidation = $.parseJSON(ajaxRequest.responseText);
+            // self.serverError(contactValidation.error);
+            // self.serverValidation(true);
+        }).always(function() {
+            $.ajax({
+                type: "GET",
+                url: "/phoneBook/rcp/api/v1/getAllContacts",
+                success: self.getAllSuccessCallback
+            });
+        });
+    };
+
     self.getAllSuccessCallback = function (contactListFormServer) {
         var contactListForClient = self.convertContactList(contactListFormServer);
         self.rows(contactListForClient);

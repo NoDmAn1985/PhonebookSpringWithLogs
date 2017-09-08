@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping("/phoneBook/rcp/api/v1")
 public class PhoneBookController {
 
-    private static final Logger logger = LoggerFactory.getLogger(PhoneBookController.class);
+    private final Logger logger = LoggerFactory.getLogger(PhoneBookController.class);
 
     @Autowired
     private ContactService contactService;
@@ -27,15 +27,29 @@ public class PhoneBookController {
     @RequestMapping(value = "getAllContacts", method = RequestMethod.GET)
     @ResponseBody
     public List<Contact> getAllContacts() {
-        logger.info("called method getAllContacts");
+        logger.info("getAllContacts");
         return contactService.getAllContacts();
     }
 
     @RequestMapping(value = "addContact", method = RequestMethod.POST)
     @ResponseBody
     public ContactValidation addContact(@RequestBody Contact contact) {
+        logger.info(String.format("addContact: %s", contact));
         return contactService.addContact(contact);
     }
+
+    @RequestMapping(value = "removeContact", method = RequestMethod.POST)
+    public void removeContact(@RequestParam("index") int id) {
+        logger.info(String.format("removeContact: пытаюсь удалить контакт с id - %d", id));
+        boolean isRemove = false;
+        isRemove = contactService.removeContact(id);
+        if (!isRemove) {
+            logger.info("removeContact: его уже нет");
+        } else {
+            logger.info("removeContact: успешно");
+        }
+    }
+
 }
 
 

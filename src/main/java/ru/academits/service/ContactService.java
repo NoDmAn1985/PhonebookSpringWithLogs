@@ -61,6 +61,10 @@ public class ContactService {
         return contactValidation;
     }
 
+    public boolean removeContact(int index) {
+        return contactDao.remove(index);
+    }
+
     public List<Contact> getAllContacts() {
         return contactDao.getAllContacts();
     }
